@@ -1,6 +1,6 @@
 const COMMENTS_PER_PAGE = 20;
 
-var BebopComments = Vue.component("gossip-comments", {
+var GossipComments = Vue.component("gossip-comments", {
   template: `
     <div class="container content-container">
 

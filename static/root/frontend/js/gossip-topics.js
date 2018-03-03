@@ -1,6 +1,6 @@
 const TOPICS_PER_PAGE = 20;
 
-var BebopTopics = Vue.component("gossip-topics", {
+var GossipTopics = Vue.component("gossip-topics", {
   template: `
     <div class="container content-container">
 

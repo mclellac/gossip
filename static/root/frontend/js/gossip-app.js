@@ -1,7 +1,7 @@
 const BEBOP_LOCAL_STORAGE_TOKEN_KEY = "gossip_auth_token";
 const BEBOP_OAUTH_RESULT_COOKIE = "gossip_oauth_result";
 
-var BebopApp = new Vue({
+var GossipApp = new Vue({
   el: "#app",
 
   template: `
@@ -14,15 +14,15 @@ var BebopApp = new Vue({
 
   router: new VueRouter({
     routes: [
-      { path: "/", component: BebopTopics },
-      { path: "/p/:page", component: BebopTopics },
-      { path: "/t/:topic", component: BebopComments },
-      { path: "/t/:topic/p/:page", component: BebopComments },
-      { path: "/t/:topic/p/:page/c/:comment", component: BebopComments },
-      { path: "/new-topic", component: BebopNewTopic },
-      { path: "/new-comment/:topic", component: BebopNewComment },
-      { path: "/me", component: BebopUser },
-      { path: "/u/:user", component: BebopUser },
+      { path: "/", component: GossipTopics },
+      { path: "/p/:page", component: GossipTopics },
+      { path: "/t/:topic", component: GossipComments },
+      { path: "/t/:topic/p/:page", component: GossipComments },
+      { path: "/t/:topic/p/:page/c/:comment", component: GossipComments },
+      { path: "/new-topic", component: GossipNewTopic },
+      { path: "/new-comment/:topic", component: GossipNewComment },
+      { path: "/me", component: GossipUser },
+      { path: "/u/:user", component: GossipUser },
     ],
     scrollBehavior: function(to, from, savedPosition) {
       if (savedPosition) {
@@ -161,5 +161,5 @@ var BebopApp = new Vue({
 });
 
 function gossipOAuthEnd() {
-  BebopApp.oauthEnd();
+  GossipApp.oauthEnd();
 }

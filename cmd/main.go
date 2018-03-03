@@ -1,4 +1,4 @@
-// Bebop is a simple discussion board / forum web application.
+// Gossip is a simple discussion board / forum web application.
 // The gossip command is a command-line tool that manages the gossip web server.
 package main
 

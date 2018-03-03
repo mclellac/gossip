@@ -1,4 +1,4 @@
-var BebopNewTopic = Vue.component("gossip-new-topic", {
+var GossipNewTopic = Vue.component("gossip-new-topic", {
   template: `
     <div class="container content-container">
       <h2>New Topic</h2>

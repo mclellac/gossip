@@ -1,4 +1,4 @@
-var BebopUser = Vue.component("gossip-user", {
+var GossipUser = Vue.component("gossip-user", {
   template: `
     <div class="container content-container">
 

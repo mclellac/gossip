@@ -1,4 +1,4 @@
-var BebopUsernameModal = Vue.component("gossip-username-modal", {
+var GossipUsernameModal = Vue.component("gossip-username-modal", {
   template: `
     <div class="modal fade" id="username-modal" tabindex="-1" role="dialog" data-backdrop="static">
       <div class="modal-dialog" role="document">

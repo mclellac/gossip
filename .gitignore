@@ -8,6 +8,7 @@
 # configuration files
 *.yaml
 *.log
+*.conf
 
 # Folders
 _obj

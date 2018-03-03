@@ -33,7 +33,7 @@ format:
 
 build:
 	@echo "$(GREEN)>>> Building$(RESET)"
-	go build -o ./gossip ./cmd
+	go build -o ./gossip ./cmd/gossip
 
 clean:
 	@echo "$(GREEN)>>> Cleaning$(RESET)"
@@ -46,10 +46,10 @@ install:
 
 lint:
 	@echo "$(GREEN)>>> Linting$(RESET)"
-	$(GOPATH)/bin/golint ./client
-	$(GOPATH)/bin/golint ./servers/post
+	$(GOPATH)/bin/golint ./cmd/gossip
+	$(GOPATH)/bin/golint ./api
 
 vet:
-	go vet ./cmd/
+	go vet ./cmd/gossip
 
 all: format dep vet build

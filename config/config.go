@@ -18,68 +18,68 @@ import (
 
 // Config is a gossip configuration struct.
 type Config struct {
-	Address string `hcl:"address" envconfig:"BEBOP_ADDRESS"`
-	BaseURL string `hcl:"base_url" envconfig:"BEBOP_BASE_URL"`
-	Title   string `hcl:"title" envconfig:"BEBOP_TITLE"`
+	Address string `hcl:"address" envconfig:"GOSSIP_ADDRESS"`
+	BaseURL string `hcl:"base_url" envconfig:"GOSSIP_BASE_URL"`
+	Title   string `hcl:"title" envconfig:"GOSSIP_TITLE"`
 
 	JWT struct {
-		Secret string `hcl:"secret" envconfig:"BEBOP_JWT_SECRET"`
+		Secret string `hcl:"secret" envconfig:"GOSSIP_JWT_SECRET"`
 	} `hcl:"jwt"`
 
 	FileStorage struct {
-		Type string `hcl:"type" envconfig:"BEBOP_FILE_STORAGE_TYPE"`
+		Type string `hcl:"type" envconfig:"GOSSIP_FILE_STORAGE_TYPE"`
 
 		Local struct {
-			Dir string `hcl:"dir" envconfig:"BEBOP_FILE_STORAGE_LOCAL_DIR"`
+			Dir string `hcl:"dir" envconfig:"GOSSIP_FILE_STORAGE_LOCAL_DIR"`
 		} `hcl:"local"`
 
 		GoogleCloudStorage struct {
-			ServiceAccountFile string `hcl:"service_account_file" envconfig:"BEBOP_FILE_STORAGE_GCS_SERVICE_ACCOUNT_FILE"`
-			Bucket             string `hcl:"bucket" envconfig:"BEBOP_FILE_STORAGE_GCS_BUCKET"`
+			ServiceAccountFile string `hcl:"service_account_file" envconfig:"GOSSIP_FILE_STORAGE_GCS_SERVICE_ACCOUNT_FILE"`
+			Bucket             string `hcl:"bucket" envconfig:"GOSSIP_FILE_STORAGE_GCS_BUCKET"`
 		} `hcl:"google_cloud_storage"`
 
 		AmazonS3 struct {
-			AccessKey string `hcl:"access_key" envconfig:"BEBOP_FILE_STORAGE_S3_ACCESS_KEY"`
-			SecretKey string `hcl:"secret_key" envconfig:"BEBOP_FILE_STORAGE_S3_SECRET_KEY"`
-			Region    string `hcl:"region" envconfig:"BEBOP_FILE_STORAGE_S3_REGION"`
-			Bucket    string `hcl:"bucket" envconfig:"BEBOP_FILE_STORAGE_S3_BUCKET"`
+			AccessKey string `hcl:"access_key" envconfig:"GOSSIP_FILE_STORAGE_S3_ACCESS_KEY"`
+			SecretKey string `hcl:"secret_key" envconfig:"GOSSIP_FILE_STORAGE_S3_SECRET_KEY"`
+			Region    string `hcl:"region" envconfig:"GOSSIP_FILE_STORAGE_S3_REGION"`
+			Bucket    string `hcl:"bucket" envconfig:"GOSSIP_FILE_STORAGE_S3_BUCKET"`
 		} `hcl:"amazon_s3"`
 	} `hcl:"file_storage"`
 
 	Store struct {
-		Type string `hcl:"type" envconfig:"BEBOP_STORE_TYPE"`
+		Type string `hcl:"type" envconfig:"GOSSIP_STORE_TYPE"`
 
 		PostgreSQL struct {
-			Address     string `hcl:"address" envconfig:"BEBOP_STORE_POSTGRESQL_ADDRESS"`
-			Username    string `hcl:"username" envconfig:"BEBOP_STORE_POSTGRESQL_USERNAME"`
-			Password    string `hcl:"password" envconfig:"BEBOP_STORE_POSTGRESQL_PASSWORD"`
-			Database    string `hcl:"database" envconfig:"BEBOP_STORE_POSTGRESQL_DATABASE"`
-			SSLMode     string `hcl:"sslmode" envconfig:"BEBOP_STORE_POSTGRESQL_SSLMODE"`
-			SSLRootCert string `hcl:"sslrootcert" envconfig:"BEBOP_STORE_POSTGRESQL_SSLROOTCERT"`
+			Address     string `hcl:"address" envconfig:"GOSSIP_STORE_POSTGRESQL_ADDRESS"`
+			Username    string `hcl:"username" envconfig:"GOSSIP_STORE_POSTGRESQL_USERNAME"`
+			Password    string `hcl:"password" envconfig:"GOSSIP_STORE_POSTGRESQL_PASSWORD"`
+			Database    string `hcl:"database" envconfig:"GOSSIP_STORE_POSTGRESQL_DATABASE"`
+			SSLMode     string `hcl:"sslmode" envconfig:"GOSSIP_STORE_POSTGRESQL_SSLMODE"`
+			SSLRootCert string `hcl:"sslrootcert" envconfig:"GOSSIP_STORE_POSTGRESQL_SSLROOTCERT"`
 		} `hcl:"postgresql"`
 
 		MySQL struct {
-			Address  string `hcl:"address" envconfig:"BEBOP_STORE_MYSQL_ADDRESS"`
-			Username string `hcl:"username" envconfig:"BEBOP_STORE_MYSQL_USERNAME"`
-			Password string `hcl:"password" envconfig:"BEBOP_STORE_MYSQL_PASSWORD"`
-			Database string `hcl:"database" envconfig:"BEBOP_STORE_MYSQL_DATABASE"`
+			Address  string `hcl:"address" envconfig:"GOSSIP_STORE_MYSQL_ADDRESS"`
+			Username string `hcl:"username" envconfig:"GOSSIP_STORE_MYSQL_USERNAME"`
+			Password string `hcl:"password" envconfig:"GOSSIP_STORE_MYSQL_PASSWORD"`
+			Database string `hcl:"database" envconfig:"GOSSIP_STORE_MYSQL_DATABASE"`
 		} `hcl:"mysql"`
 	} `hcl:"store"`
 
 	OAuth struct {
 		Google struct {
-			ClientID string `hcl:"client_id" envconfig:"BEBOP_OAUTH_GOOGLE_CLIENT_ID"`
-			Secret   string `hcl:"secret" envconfig:"BEBOP_OAUTH_GOOGLE_SECRET"`
+			ClientID string `hcl:"client_id" envconfig:"GOSSIP_OAUTH_GOOGLE_CLIENT_ID"`
+			Secret   string `hcl:"secret" envconfig:"GOSSIP_OAUTH_GOOGLE_SECRET"`
 		} `hcl:"google"`
 
 		Facebook struct {
-			ClientID string `hcl:"client_id" envconfig:"BEBOP_OAUTH_FACEBOOK_CLIENT_ID"`
-			Secret   string `hcl:"secret" envconfig:"BEBOP_OAUTH_FACEBOOK_SECRET"`
+			ClientID string `hcl:"client_id" envconfig:"GOSSIP_OAUTH_FACEBOOK_CLIENT_ID"`
+			Secret   string `hcl:"secret" envconfig:"GOSSIP_OAUTH_FACEBOOK_SECRET"`
 		} `hcl:"facebook"`
 
 		Github struct {
-			ClientID string `hcl:"client_id" envconfig:"BEBOP_OAUTH_GITHUB_CLIENT_ID"`
-			Secret   string `hcl:"secret" envconfig:"BEBOP_OAUTH_GITHUB_SECRET"`
+			ClientID string `hcl:"client_id" envconfig:"GOSSIP_OAUTH_GITHUB_CLIENT_ID"`
+			Secret   string `hcl:"secret" envconfig:"GOSSIP_OAUTH_GITHUB_SECRET"`
 		} `hcl:"github"`
 	} `hcl:"oauth"`
 }

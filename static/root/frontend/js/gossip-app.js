@@ -1,5 +1,5 @@
-const BEBOP_LOCAL_STORAGE_TOKEN_KEY = "gossip_auth_token";
-const BEBOP_OAUTH_RESULT_COOKIE = "gossip_oauth_result";
+const GOSSIP_LOCAL_STORAGE_TOKEN_KEY = "gossip_auth_token";
+const GOSSIP_OAUTH_RESULT_COOKIE = "gossip_oauth_result";
 
 var GossipApp = new Vue({
   el: "#app",
@@ -71,7 +71,7 @@ var GossipApp = new Vue({
     },
 
     signOut: function() {
-      localStorage.removeItem(BEBOP_LOCAL_STORAGE_TOKEN_KEY);
+      localStorage.removeItem(GOSSIP_LOCAL_STORAGE_TOKEN_KEY);
       Vue.http.headers.common["Authorization"] = "";
       this.auth = {
         authenticated: false,
@@ -80,7 +80,7 @@ var GossipApp = new Vue({
     },
 
     oauthEnd: function() {
-      var result = this.getCookieByName(BEBOP_OAUTH_RESULT_COOKIE);
+      var result = this.getCookieByName(GOSSIP_OAUTH_RESULT_COOKIE);
       var parts = result.split(":");
 
       if (parts.length !== 2) {
@@ -108,7 +108,7 @@ var GossipApp = new Vue({
     },
 
     oauthSuccess: function(token) {
-      localStorage.setItem(BEBOP_LOCAL_STORAGE_TOKEN_KEY, token);
+      localStorage.setItem(GOSSIP_LOCAL_STORAGE_TOKEN_KEY, token);
       this.checkAuth();
     },
 
@@ -122,7 +122,7 @@ var GossipApp = new Vue({
     },
 
     checkAuth: function() {
-      var token = localStorage.getItem(BEBOP_LOCAL_STORAGE_TOKEN_KEY);
+      var token = localStorage.getItem(GOSSIP_LOCAL_STORAGE_TOKEN_KEY);
       if (token) {
         Vue.http.headers.common["Authorization"] = "Bearer " + token;
       }

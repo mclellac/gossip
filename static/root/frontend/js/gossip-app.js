@@ -160,6 +160,7 @@ var GossipApp = new Vue({
   },
 });
 
+// 
 function gossipOAuthEnd() {
   GossipApp.oauthEnd();
 }

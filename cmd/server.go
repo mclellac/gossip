@@ -10,15 +10,15 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 
-	"github.com/disintegration/bebop/api"
-	"github.com/disintegration/bebop/avatar"
-	"github.com/disintegration/bebop/config"
-	"github.com/disintegration/bebop/jwt"
-	"github.com/disintegration/bebop/oauth"
-	"github.com/disintegration/bebop/static"
+	"github.com/mclellac/gossip/api"
+	"github.com/mclellac/gossip/avatar"
+	"github.com/mclellac/gossip/config"
+	"github.com/mclellac/gossip/jwt"
+	"github.com/mclellac/gossip/oauth"
+	"github.com/mclellac/gossip/static"
 )
 
-// startServer configures and starts the bebop web server.
+// startServer configures and starts the gossip web server.
 func startServer() {
 	cfg, err := getConfig()
 	if err != nil {

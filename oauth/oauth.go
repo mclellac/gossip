@@ -1,5 +1,5 @@
 // Package oauth provides an HTTP handler to handle OAuth2
-// redirect and callback requests for the bebop web app.
+// redirect and callback requests for the gossip web app.
 package oauth
 
 import (
@@ -15,13 +15,13 @@ import (
 	"github.com/satori/go.uuid"
 	"golang.org/x/oauth2"
 
-	"github.com/disintegration/bebop/jwt"
-	"github.com/disintegration/bebop/store"
+	"github.com/mclellac/gossip/jwt"
+	"github.com/mclellac/gossip/db"
 )
 
 const (
-	stateCookie   = "bebop_oauth_state"
-	resultCookie  = "bebop_oauth_result"
+	stateCookie   = "gossip_oauth_state"
+	resultCookie  = "gossip_oauth_result"
 	clientTimeout = 10 * time.Second
 )
 
@@ -223,7 +223,7 @@ func (h *Handler) renderOAuthResult(w http.ResponseWriter, message string) {
 		Secure: strings.HasPrefix(h.MountURL, "https"),
 		MaxAge: 10 * 60,
 	})
-	fmt.Fprint(w, `<!doctype html><title>OAuth</title><script>try {opener.bebopOAuthEnd()} finally {window.close()}</script>`)
+	fmt.Fprint(w, `<!doctype html><title>OAuth</title><script>try {opener.gossipOAuthEnd()} finally {window.close()}</script>`)
 }
 
 func (h *Handler) handleError(w http.ResponseWriter, format string, a ...interface{}) {

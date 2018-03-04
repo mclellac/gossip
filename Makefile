@@ -31,6 +31,10 @@ format:
 	@echo "$(GREEN)>>> Formatting$(RESET)"
 	$(foreach ENTRY,$(PACKAGES),$(GOFMT) $(GOPATH)/src/$(ENTRY);)
 
+gen:
+	@echo "Generating static/data.go"
+	cd static && go run gen.go
+
 build:
 	@echo "$(GREEN)>>> Building$(RESET)"
 	go build -o ./gossip ./cmd/gossip

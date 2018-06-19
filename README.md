@@ -1,10 +1,10 @@
 # This is a fork of Grigory Dryapak's Bebop project located at: github.com/disintegration/bebop/
-If you're here, you're very likely going to want to use Bebop instead as I plan on only using this for my own purposes.
+If you're here, you're very likely going to want to use gossip instead as I plan on only using this for my own purposes.
 
 
-# Bebop
+# Gossip
 
-Bebop is a simple discussion board / forum web application.
+Gossip is a simple discussion board / forum web application.
 
 ## Features
 
@@ -30,29 +30,29 @@ Bebop is a simple discussion board / forum web application.
 
   * Create a new empty database (MySQL оr PostgreSQL) that will be used as a data store and a database user with all privileges granted on this database.
 
-  * Obtain OAuth 2.0 credentials (client_id and secret) from at least one of the providers (Google, Facebook, Github) so users can log into the web application. The OAuth callback url will be `<base_url>/oauth/end/<provider>`. The `<base_url>` is where the bebop web app will be mounted on your site and the `<provider>` is the lowercase provider name. For example, if base_url is `https://my.website.com/forum/`, then the oauth callback url for google will be `https://my.website.com/forum/oauth/end/google`.
+  * Obtain OAuth 2.0 credentials (client_id and secret) from at least one of the providers (Google, Facebook, Github) so users can log into the web application. The OAuth callback url will be `<base_url>/oauth/end/<provider>`. The `<base_url>` is where the gossip web app will be mounted on your site and the `<provider>` is the lowercase provider name. For example, if base_url is `https://my.website.com/forum/`, then the oauth callback url for google will be `https://my.website.com/forum/oauth/end/google`.
 
-  * Download and compile the bebop binary:
+  * Download and compile the gossip binary:
     ```
-    $ go get -u github.com/disintegration/bebop/cmd/bebop
+    $ go get -u github.com/disintegration/gossip/cmd/gossip
     ```
 
   * Inside an empty directory run:
     ```
-    $ bebop init
+    $ gossip init
     ```
-    This will generate an initial configuration file "bebop.conf" inside the current dir.
+    This will generate an initial configuration file "gossip.conf" inside the current dir.
     Edit the configuration file to set the server listen address, the base url, the database and file storage parameters, OAuth credentials, etc.
 
-  * Run the following command to start the bebop web server.
+  * Run the following command to start the gossip web server.
     ```
-    $ bebop start
+    $ gossip start
     ```
 
   * Sign in into your web application using one of the social login providers.
     Then run the following command to grant admin privileges to your user.
     ```
-    $ bebop add-admin <your-username>
+    $ gossip add-admin <your-username>
     ```
 
 ## Screenshots

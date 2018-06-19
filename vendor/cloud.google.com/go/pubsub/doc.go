@@ -18,10 +18,14 @@ messages, hiding the the details of the underlying server RPCs.  Google Cloud
 Pub/Sub is a many-to-many, asynchronous messaging system that decouples senders
 and receivers.
 
-Note: This package is experimental and may make backwards-incompatible changes.
+Note: This package is in beta. Some backwards-incompatible changes may occur.
 
 More information about Google Cloud Pub/Sub is available at
 https://cloud.google.com/pubsub/docs
+
+See https://godoc.org/cloud.google.com/go for authentication, timeouts,
+connection pooling and similar aspects of this package.
+
 
 Publishing
 
@@ -54,7 +58,8 @@ that is published to the topic will be delivered to all of its subscriptions.
 
 Subsciptions may be created like so:
 
- sub, err := pubsubClient.CreateSubscription(context.Background(), "sub-name", topic, 0, nil)
+ sub, err := pubsubClient.CreateSubscription(context.Background(), "sub-name",
+	pubsub.SubscriptionConfig{Topic: topic})
 
 Messages are then consumed from a subscription via callback.
 
@@ -111,9 +116,10 @@ increases the available time for client code to process messages. However, if
 the client code neglects to call Message.Ack/Nack, a large MaxExtension will
 increase the delay before the message is redelivered.
 
-Authentication
+Slow Message Processing
 
-See examples of authorization and authentication at
-https://godoc.org/cloud.google.com/go#pkg-examples.
+For use cases where message processing exceeds 30 minutes, we recommend using
+the base client in a pull model, since long-lived streams are periodically killed
+by firewalls. See the example at https://godoc.org/cloud.google.com/go/pubsub/apiv1#example-SubscriberClient-Pull-LengthyClientProcessing
 */
 package pubsub // import "cloud.google.com/go/pubsub"

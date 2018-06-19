@@ -16,16 +16,16 @@ package logadmin
 
 import (
 	"log"
-	"reflect"
 	"testing"
 	"time"
 
 	"cloud.google.com/go/internal/testutil"
+	"cloud.google.com/go/internal/uid"
 	"golang.org/x/net/context"
 	"google.golang.org/api/iterator"
 )
 
-var metricIDs = testutil.NewUIDSpace("GO-CLIENT-TEST-METRIC")
+var metricIDs = uid.NewSpace("GO-CLIENT-TEST-METRIC", nil)
 
 // Initializes the tests before they run.
 func initMetrics(ctx context.Context) {
@@ -64,7 +64,7 @@ func TestCreateDeleteMetric(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if want := metric; !reflect.DeepEqual(got, want) {
+	if want := metric; !testutil.Equal(got, want) {
 		t.Errorf("got %+v, want %+v", got, want)
 	}
 
@@ -94,7 +94,7 @@ func TestUpdateMetric(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if want := metric; !reflect.DeepEqual(got, want) {
+	if want := metric; !testutil.Equal(got, want) {
 		t.Errorf("got %+v, want %+v", got, want)
 	}
 
@@ -107,7 +107,7 @@ func TestUpdateMetric(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if want := metric; !reflect.DeepEqual(got, want) {
+	if want := metric; !testutil.Equal(got, want) {
 		t.Errorf("got %+v, want %+v", got, want)
 	}
 }
@@ -149,7 +149,7 @@ func TestListMetrics(t *testing.T) {
 			got[m.ID] = m
 		}
 	}
-	if !reflect.DeepEqual(got, want) {
+	if !testutil.Equal(got, want) {
 		t.Errorf("got %+v, want %+v", got, want)
 	}
 }

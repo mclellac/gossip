@@ -6,6 +6,17 @@ import (
 	"math"
 )
 
+type uweight struct {
+	u      int
+	weight float32
+}
+
+type uvweight struct {
+	u      int
+	v      int
+	weight float32
+}
+
 func prepareConvolutionWeights(kernel []float32, normalize bool) (int, []uvweight) {
 	size := int(math.Sqrt(float64(len(kernel))))
 	if size%2 == 0 {
@@ -125,11 +136,11 @@ func (p *convolutionFilter) Draw(dst draw.Image, src image.Image, options *Optio
 					rowsy := kcenter + w.v
 
 					px := rows[rowsy][rowsx]
-					r += px.R * w.weight
-					g += px.G * w.weight
-					b += px.B * w.weight
+					r += px.r * w.weight
+					g += px.g * w.weight
+					b += px.b * w.weight
 					if p.alpha {
-						a += px.A * w.weight
+						a += px.a * w.weight
 					}
 				}
 				if p.abs {
@@ -149,7 +160,7 @@ func (p *convolutionFilter) Draw(dst draw.Image, src image.Image, options *Optio
 					}
 				}
 				if !p.alpha {
-					a = rows[kcenter][x-srcb.Min.X].A
+					a = rows[kcenter][x-srcb.Min.X].a
 				}
 				pixSetter.setPixel(dstb.Min.X+x-srcb.Min.X, dstb.Min.Y+y-srcb.Min.Y, pixel{r, g, b, a})
 			}
@@ -244,10 +255,10 @@ func convolveLine(dstBuf []pixel, srcBuf []pixel, weights []uweight) {
 				k = max
 			}
 			c := srcBuf[k]
-			wa := c.A * w.weight
-			r += c.R * wa
-			g += c.G * wa
-			b += c.B * wa
+			wa := c.a * w.weight
+			r += c.r * wa
+			g += c.g * wa
+			b += c.b * wa
 			a += wa
 		}
 		if a != 0 {
@@ -380,9 +391,9 @@ func GaussianBlur(sigma float32) Filter {
 }
 
 type unsharpMaskFilter struct {
-	sigma    float32
-	amount   float32
-	thresold float32
+	sigma     float32
+	amount    float32
+	threshold float32
 }
 
 func (p *unsharpMaskFilter) Bounds(srcBounds image.Rectangle) (dstBounds image.Rectangle) {
@@ -390,9 +401,9 @@ func (p *unsharpMaskFilter) Bounds(srcBounds image.Rectangle) (dstBounds image.R
 	return
 }
 
-func unsharp(orig, blurred, amount, thresold float32) float32 {
+func unsharp(orig, blurred, amount, threshold float32) float32 {
 	dif := (orig - blurred) * amount
-	if absf32(dif) > absf32(thresold) {
+	if absf32(dif) > absf32(threshold) {
 		return orig + dif
 	}
 	return orig
@@ -424,10 +435,10 @@ func (p *unsharpMaskFilter) Draw(dst draw.Image, src image.Image, options *Optio
 				pxOrig := pixGetterOrig.getPixel(x, y)
 				pxBlur := pixGetterBlur.getPixel(x, y)
 
-				r := unsharp(pxOrig.R, pxBlur.R, p.amount, p.thresold)
-				g := unsharp(pxOrig.G, pxBlur.G, p.amount, p.thresold)
-				b := unsharp(pxOrig.B, pxBlur.B, p.amount, p.thresold)
-				a := unsharp(pxOrig.A, pxBlur.A, p.amount, p.thresold)
+				r := unsharp(pxOrig.r, pxBlur.r, p.amount, p.threshold)
+				g := unsharp(pxOrig.g, pxBlur.g, p.amount, p.threshold)
+				b := unsharp(pxOrig.b, pxBlur.b, p.amount, p.threshold)
+				a := unsharp(pxOrig.a, pxBlur.a, p.amount, p.threshold)
 
 				pixelSetter.setPixel(dstb.Min.X+x-srcb.Min.X, dstb.Min.Y+y-srcb.Min.Y, pixel{r, g, b, a})
 			}
@@ -439,7 +450,7 @@ func (p *unsharpMaskFilter) Draw(dst draw.Image, src image.Image, options *Optio
 // The sigma parameter is used in a gaussian function and affects the radius of effect.
 // Sigma must be positive. Sharpen radius roughly equals 3 * sigma.
 // The amount parameter controls how much darker and how much lighter the edge borders become. Typically between 0.5 and 1.5.
-// The thresold parameter controls the minimum brightness change that will be sharpened. Typically between 0 and 0.05.
+// The threshold parameter controls the minimum brightness change that will be sharpened. Typically between 0 and 0.05.
 //
 // Example:
 //
@@ -449,11 +460,11 @@ func (p *unsharpMaskFilter) Draw(dst draw.Image, src image.Image, options *Optio
 //	dst := image.NewRGBA(g.Bounds(src.Bounds()))
 //	g.Draw(dst, src)
 //
-func UnsharpMask(sigma, amount, thresold float32) Filter {
+func UnsharpMask(sigma, amount, threshold float32) Filter {
 	return &unsharpMaskFilter{
-		sigma:    sigma,
-		amount:   amount,
-		thresold: thresold,
+		sigma:     sigma,
+		amount:    amount,
+		threshold: threshold,
 	}
 }
 
@@ -548,10 +559,10 @@ func (p *hvConvolutionFilter) Draw(dst draw.Image, src image.Image, options *Opt
 			for x := srcb.Min.X; x < srcb.Max.X; x++ {
 				pxh := pixGetterH.getPixel(x, y)
 				pxv := pixGetterV.getPixel(x, y)
-				r := sqrtf32(pxh.R*pxh.R + pxv.R*pxv.R)
-				g := sqrtf32(pxh.G*pxh.G + pxv.G*pxv.G)
-				b := sqrtf32(pxh.B*pxh.B + pxv.B*pxv.B)
-				pixSetter.setPixel(dstb.Min.X+x-srcb.Min.X, dstb.Min.Y+y-srcb.Min.Y, pixel{r, g, b, pxh.A})
+				r := sqrtf32(pxh.r*pxh.r + pxv.r*pxv.r)
+				g := sqrtf32(pxh.g*pxh.g + pxv.g*pxv.g)
+				b := sqrtf32(pxh.b*pxh.b + pxv.b*pxv.b)
+				pixSetter.setPixel(dstb.Min.X+x-srcb.Min.X, dstb.Min.Y+y-srcb.Min.Y, pixel{r, g, b, pxh.a})
 			}
 		}
 	})

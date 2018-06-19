@@ -20,18 +20,18 @@ package logadmin
 
 import (
 	"log"
-	"reflect"
 	"testing"
 	"time"
 
 	"cloud.google.com/go/internal/testutil"
+	"cloud.google.com/go/internal/uid"
 	"cloud.google.com/go/storage"
 	"golang.org/x/net/context"
 	"google.golang.org/api/iterator"
 	"google.golang.org/api/option"
 )
 
-var sinkIDs = testutil.NewUIDSpace("GO-CLIENT-TEST-SINK")
+var sinkIDs = uid.NewSpace("GO-CLIENT-TEST-SINK", nil)
 
 const testFilter = ""
 
@@ -41,7 +41,7 @@ var testSinkDestination string
 // Returns a cleanup function to be called after the tests finish.
 func initSinks(ctx context.Context) func() {
 	// Create a unique GCS bucket so concurrent tests don't interfere with each other.
-	bucketIDs := testutil.NewUIDSpace(testProjectID + "-log-sink")
+	bucketIDs := uid.NewSpace(testProjectID+"-log-sink", nil)
 	testBucket := bucketIDs.New()
 	testSinkDestination = "storage.googleapis.com/" + testBucket
 	var storageClient *storage.Client
@@ -125,14 +125,14 @@ func TestCreateDeleteSink(t *testing.T) {
 		t.Fatal(err)
 	}
 	defer client.DeleteSink(ctx, sink.ID)
-	if want := sink; !reflect.DeepEqual(got, want) {
+	if want := sink; !testutil.Equal(got, want) {
 		t.Errorf("got %+v, want %+v", got, want)
 	}
 	got, err = client.Sink(ctx, sink.ID)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if want := sink; !reflect.DeepEqual(got, want) {
+	if want := sink; !testutil.Equal(got, want) {
 		t.Errorf("got %+v, want %+v", got, want)
 	}
 
@@ -153,20 +153,22 @@ func TestUpdateSink(t *testing.T) {
 		Filter:      testFilter,
 	}
 
-	// Updating a non-existent sink creates a new one.
+	if _, err := client.CreateSink(ctx, sink); err != nil {
+		t.Fatal(err)
+	}
 	got, err := client.UpdateSink(ctx, sink)
 	if err != nil {
 		t.Fatal(err)
 	}
 	defer client.DeleteSink(ctx, sink.ID)
-	if want := sink; !reflect.DeepEqual(got, want) {
+	if want := sink; !testutil.Equal(got, want) {
 		t.Errorf("got %+v, want %+v", got, want)
 	}
 	got, err = client.Sink(ctx, sink.ID)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if want := sink; !reflect.DeepEqual(got, want) {
+	if want := sink; !testutil.Equal(got, want) {
 		t.Errorf("got %+v, want %+v", got, want)
 	}
 
@@ -179,7 +181,7 @@ func TestUpdateSink(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if want := sink; !reflect.DeepEqual(got, want) {
+	if want := sink; !testutil.Equal(got, want) {
 		t.Errorf("got %+v, want %+v", got, want)
 	}
 }
@@ -220,7 +222,7 @@ func TestListSinks(t *testing.T) {
 			got[s.ID] = s
 		}
 	}
-	if !reflect.DeepEqual(got, want) {
+	if !testutil.Equal(got, want) {
 		t.Errorf("got %+v, want %+v", got, want)
 	}
 }
